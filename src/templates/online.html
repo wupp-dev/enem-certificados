@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Certificado de aprovechamiento XXVI ENEM</title>
+    <title>Certificado de aprovechamiento online XXVI ENEM</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
@@ -23,7 +23,8 @@
       }
 
       .content {
-        padding-top: 2.1cm;
+        padding-top: 2cm;
+        padding-bottom: 2cm;
         padding-left: 1.43cm;
         padding-right: 1.43cm;
         display: flex;
@@ -60,16 +61,19 @@
       }
 
       .signature-container {
-        margin-top: 2.5cm;
+        margin-top: auto;
         display: grid;
         grid-template-columns: 1fr auto 1fr;
       }
 
+      .signature-container .decorator {
+        width: 3.13cm;
+        padding-top: 1.65cm;
+      }
+
       .signature {
-        margin-top: 1.515cm;
         max-width: 9.43cm;
-        display: flex;
-        flex-direction: column;
+        text-align: center;
       }
 
       .signature .bar {
@@ -80,55 +84,60 @@
         margin-bottom: 0.3cm;
       }
 
+      .signature img {
+        height: 2.5cm;
+        width: auto;
+        margin-bottom: 0.5cm;
+      }
+
       .signature .name {
         font-family: "Lexend Deca", sans-serif;
         font-size: 19pt;
-        text-align: center;
       }
 
       .signature .position {
         font-size: 15pt;
-        text-align: center;
-      }
-
-      .signature-container img {
-        width: 3.13cm;
       }
     </style>
   </head>
   <body>
-    <img src="mosaico.png" alt="Mosaico lateral decorativo" />
+    <img src="{{mosaico}}" alt="Mosaico lateral decorativo" />
     <div class="content">
       <div class="text-container">
         <p>Este documento <b>certifica</b> que</p>
       </div>
       <div class="name-bar">
-        <p class="name">Nombre Apellido Apellido</p>
+        <p class="name">{{nombre}}</p>
         <div class="bar"></div>
       </div>
       <div class="text-container">
         <p>
-          con DNI XXXXXXX ha asistido al
+          con {{tipoNif}} {{nif}} ha asistido, en la modalidad <b>online</b>, al
           <b>XXVI Encuentro Nacional de Estudiantes de Matemáticas (ENEM)</b>
           celebrado en Granada, entre el 22 y el 27 de julio de 2025 en la
-          Universidad de Granada, con un total de 25 horas de formación.
+          Universidad de Granada, con un total de 28.25 horas de formación.
         </p>
         <br />
         <p>
           Y para que así conste y surta los efectos oportunos, se expide el
-          presente en Granada, España, a X de XX de 2025.
+          presente en Granada, España, a {{day}} de {{month}} de {{year}}.
         </p>
       </div>
       <div class="signature-container">
         <div class="signature">
+          <img
+            src="{{presi}}"
+            alt="Firma del Presidente del Comité Organizador"
+          />
           <div class="bar"></div>
           <p class="name">Adrián García Barragán</p>
           <p class="position">
             Presidente del Comité Organizador del XXVI ENEM
           </p>
         </div>
-        <img src="roseton.png" alt="Rosetón decorativo" />
+        <img class="decorator" src="{{roseton}}" alt="Rosetón decorativo" />
         <div class="signature">
+          <img src="{{secre}}" alt="Firma de la Secretaria de la ANEM" />
           <div class="bar"></div>
           <p class="name">Marina Polo Rodríguez</p>
           <p class="position">Secretaria de la ANEM</p>
