@@ -42,7 +42,16 @@ pnpm start
 - Para cada CSV busca la plantilla correspondiente en `src/templates/`
 - Ejemplo: `input/attendant.csv` → `src/templates/attendant.html` → `output/attendant/`
 
-#### 2. Procesamiento específico
+#### 2. Procesamiento por plantilla específica
+
+```sh
+pnpm start <plantilla>
+```
+
+- Procesa una plantilla específica buscando automáticamente su CSV correspondiente en `input/`
+- Ejemplo: `pnpm start custom` busca `input/custom.csv` y usa `src/templates/custom.html`
+
+#### 3. Procesamiento completamente específico
 
 ```sh
 pnpm start <plantilla> <archivo.csv>
@@ -56,17 +65,29 @@ pnpm start <plantilla> <archivo.csv>
 Los archivos CSV deben incluir estas columnas mínimas:
 
 ```csv
-id,nombre,tipoNif,nif
-1,Juan Pérez Fernández,DNI,12345678A
-2,María López Hurtado,NIE,X1234567Y
+id,nombre
+1,Juan Pérez Fernández
+2,María López Hurtado
 ```
 
 Columnas adicionales según el tipo de certificado:
 
-- `tituloPoster` - Para certificados de pósters
-- `cargo` - Para certificados de organización
+- `tipoNif`, `nif` - Para todos los certificados excepto los personalizados (plantilla `custom`)
+- `tituloPoster` - Para certificados de pósteres
+- `cargo` - Para certificados de organización o voluntarios
+- `titulo` - Para el título del documento (plantilla `custom`)
+- `texto` - Para certificados personalizados (plantilla `custom`)
 
 **Nota:** Las columnas `day`, `month` y `year` se generan automáticamente con la fecha actual.
+
+### Certificados personalizados (plantilla `custom`)
+
+La plantilla `custom` permite texto completamente personalizable usando HTML:
+
+```csv
+id,nombre,titulo,texto
+JP,Juan Pérez,Certificado conferenciante XXVI ENEM,"ha impartido la conferencia titulada <b>«Las mates molan»</b> en el <b>XXVI Encuentro Nacional de Estudiantes de Matemáticas (ENEM)</b> celebrado en Granada, entre el 22 y el 27 de julio de 2025 en la Universidad de Granada."
+```
 
 ## Personalización
 

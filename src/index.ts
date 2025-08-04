@@ -7,13 +7,14 @@ import csvParse from "csv-parse/sync";
 interface Certificado {
   id: string;
   nombre: string;
-  tipoNif: string;
-  nif: string;
+  tipoNif?: string;
+  nif?: string;
   day: string;
   month: string;
   year: string;
   tituloPoster?: string; // opcional, para certificados de posters
   cargo?: string; // opcional, para certificados de organización
+  texto?: string; // opcional, para certificados personalizados
   [key: string]: string; // permite campos extra si el CSV tiene más
 }
 
@@ -125,6 +126,26 @@ async function main() {
     return;
   }
 
+  // If only template name is provided, look for corresponding CSV in input folder
+  if (templateName && !csvFile) {
+    const inputDir = path.resolve(__dirname, "../input");
+    const csvPath = path.join(inputDir, `${templateName}.csv`);
+
+    if (!fs.existsSync(csvPath)) {
+      console.error(`CSV file not found: ${csvPath}`);
+      console.error(
+        `Please ensure ${templateName}.csv exists in the input folder`
+      );
+      return;
+    }
+
+    console.log(
+      `Processing template: ${templateName} with CSV: ${templateName}.csv`
+    );
+    await processTemplate(templateName, csvPath);
+    return;
+  }
+
   // If no arguments provided, process all CSV files in input folder
   if (!templateName && !csvFile) {
     const inputDir = path.resolve(__dirname, "../input");
@@ -152,13 +173,13 @@ async function main() {
     return;
   }
 
-  // If only one argument is provided, show error
-  console.error(
-    "Error: Please provide both template name and CSV file, or no arguments to process all CSV files in input folder"
-  );
+  // This should never be reached, but just in case
   console.error("Usage:");
   console.error(
     "  pnpm start <templateName> <csvFile>    - Process specific template with CSV file"
+  );
+  console.error(
+    "  pnpm start <templateName>              - Process template with matching CSV from input folder"
   );
   console.error(
     "  pnpm start                             - Process all CSV files in input folder"
